@@ -25,6 +25,40 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Before Start
+
+add .env on folder
+
+```bash
+  NODE_ENV= string
+
+  APPLICATION_PORT= number
+  APPLICATION_URL= string
+  ALLOWED_ORIGIN= string (http://HOST:3000 etc)
+
+  COOKIES_SECRET= string
+  SESSION_SECRET= string
+  SESSION_NAME= string
+  SESSION_DOMAIN= string
+  SESSION_MAX_AGE= string(30d, 1w, etc.)
+  SESSION_HTTP_ONLY= boolean
+  SESSION_SECURE= boolean
+  SESSION_FOLDER= string (folder for session (sessions: etc.))
+
+  POSTGRES_USER= string
+  POSTGRES_PASSWORD= string
+  POSTGRES_HOST= string
+  POSTGRES_PORT= number
+  POSTGRES_DB= string
+  POSTGRES_URI='postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}' string
+
+  REDIS_USER= string
+  REDIS_PASSWORD= string
+  REDIS_HOST= string
+  REDIS_PORT= number
+  REDIS_URI='redis://:${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}'
+```
+
 ## Project setup
 
 ```bash
