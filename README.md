@@ -66,7 +66,15 @@ add .env on folder
 ## Project setup
 
 ```bash
-$ npm install
+npm install //get dependencies
+
+npx prisma generate //generate prisma models
+
+npx prisma db push //push in base
+
+docker compose up -d //up database (redis/postgre)
+
+npm run start:dev //start nest app
 ```
 
 ## Compile and run the project
