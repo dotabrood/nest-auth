@@ -5,6 +5,7 @@ import { IS_DEV_ENV } from './libs/common/utils/is-dev.util'
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { ProviderModule } from './provider/provider.module';
 
 @Module({
 	imports: [
@@ -14,7 +15,8 @@ import { UserModule } from './user/user.module';
 		}),
 		PrismaModule,
 		AuthModule,
-		UserModule
+		UserModule,
+		ProviderModule
 	],
 	exports: []
 })
