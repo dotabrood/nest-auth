@@ -63,7 +63,7 @@ add .env on folder
   REDIS_URI='redis://:${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}'
 ```
 
-## Project setup
+## Compile and run the project
 
 ```bash
 npm install //get dependencies
@@ -75,18 +75,4 @@ npx prisma db push //push in base
 docker compose up -d //up database (redis/postgre)
 
 npm run start:dev //start nest app
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-``
 ```
