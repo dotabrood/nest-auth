@@ -1,7 +1,7 @@
 import { ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
-import { RedisStore } from 'connect-redis'
+import RedisStore from 'connect-redis'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import { Redis } from 'ioredis'
@@ -43,7 +43,7 @@ async function bootstrap() {
 			},
 			store: new RedisStore({
 				client: redis,
-				prefix: config.getOrThrow<string>('SESSION_STORE')
+				prefix: config.getOrThrow<string>('SESSION_FOLDER')
 			})
 		})
 	)
@@ -53,6 +53,8 @@ async function bootstrap() {
 		credentials: true,
 		exposedHeaders: ['set-cookie']
 	})
+
+	console.log(`app start in ${config.getOrThrow<number>('APPLICATION_PORT')}`)
 
 	await app.listen(config.getOrThrow<number>('APPLICATION_PORT'))
 }
