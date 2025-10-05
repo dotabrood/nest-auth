@@ -22,7 +22,7 @@
 		"forceConsistentCasingInFileNames": false,
 		"noFallthroughCasesInSwitch": false,
 		"moduleResolution": "node16",
-		"module": "node16"
-		// "jsx": "react",
+		"module": "node16",
+		"jsx": "react"
 	}
 }

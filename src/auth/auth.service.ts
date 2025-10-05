@@ -15,6 +15,7 @@ import { UserService } from '@/user/user.service'
 
 import { LoginDto } from './dto/auth.dto'
 import { RegisterDto } from './dto/register.dto'
+import { EmailConfirmationService } from './email-confirmation/email-confirmation.service'
 import { ProviderService } from './provider/provider.service'
 
 @Injectable()
@@ -23,7 +24,8 @@ export class AuthService {
 		private readonly userService: UserService,
 		private readonly configService: ConfigService,
 		private readonly providerService: ProviderService,
-		private readonly prismaService: PrismaService
+		private readonly prismaService: PrismaService,
+		private readonly emailConfirmationService: EmailConfirmationService
 	) {}
 
 	public async register(req: Request, dto: RegisterDto) {
@@ -44,7 +46,12 @@ export class AuthService {
 			false
 		)
 
-		return this.saveSession(req, newUser)
+		await this.emailConfirmationService.sendVerificationToken(newUser)
+
+		return {
+			message:
+				'Вы успешно зарегистрировались. Пожалуйста, подтвердите ваш email. Сообщение было отправлено на ваш почтовый адрес.'
+		}
 	}
 
 	public async login(req: Request, dto: LoginDto) {
@@ -61,6 +68,13 @@ export class AuthService {
 		if (!isValidPassword) {
 			throw new UnauthorizedException(
 				'Неверный пароль. Пожалуйста, попробуйте еще раз или восстановите пароль, если забыли его.'
+			)
+		}
+
+		if (!user.isVerified) {
+			await this.emailConfirmationService.sendVerificationToken(user)
+			throw new UnauthorizedException(
+				'Ваш email не подтвержден. Пожалуйста, проверьте вашу почту и подтвердите адрес.'
 			)
 		}
 
@@ -134,7 +148,7 @@ export class AuthService {
 		})
 	}
 
-	private async saveSession(req: Request, user: User) {
+	public async saveSession(req: Request, user: User) {
 		return new Promise((resolve, reject) => {
 			req.session.userId = user.id
 
