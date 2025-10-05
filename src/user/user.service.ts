@@ -48,6 +48,26 @@ export class UserService {
 		method: AuthMethod,
 		isVerified: boolean
 	) {
+		const currentUser = await this.findByEmail(email)
+
+		//oauth check
+		if (currentUser) {
+			const updatedUser = await this.prismaService.user.update({
+				where: {
+					email: currentUser.email
+				},
+				data: {
+					picture: currentUser.picture ?? picture,
+					password: currentUser.password ?? password,
+					isVerified,
+					method
+				},
+				include: { accounts: true }
+			})
+
+			return updatedUser
+		}
+
 		const user = await this.prismaService.user.create({
 			data: {
 				email,
